@@ -1,0 +1,16 @@
+# Secretos: nunca se versionan
+.env
+
+# Entorno virtual y cachés de Python / Jupyter
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Archivos temporales de guardado
+*.tmp
+
+# Base vectorial local. Se puede reconstruir desde datos_embeddings.
+# Revisar antes de desplegar en Streamlit Cloud (ver README).
+base_chroma/
+base_chroma_danada/
