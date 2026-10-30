@@ -10,6 +10,10 @@ __pycache__/
 # Archivos temporales de guardado
 *.tmp
 
+# Carpetas que Streamlit crea al arrancar la app (enlaces a su paquete en .venv)
+.agents/
+.claude/
+
 # Base vectorial local. Se puede reconstruir desde datos_embeddings.
 # Revisar antes de desplegar en Streamlit Cloud (ver README).
 base_chroma/
