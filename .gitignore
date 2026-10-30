@@ -9,6 +9,10 @@ __pycache__/
 
 # Archivos temporales de guardado
 *.tmp
+~$*
+
+# Vídeo de la demo: pesa demasiado para GitHub, se entrega aparte
+*.mp4
 
 # Carpetas que Streamlit crea al arrancar la app (enlaces a su paquete en .venv)
 .agents/

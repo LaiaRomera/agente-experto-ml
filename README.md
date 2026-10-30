@@ -2,7 +2,7 @@
 
 Asistente de estudio basado en RAG (recuperación aumentada por generación). Responde preguntas sobre machine learning clásico y fundamentos de redes neuronales a partir de cinco documentos propios, cita de dónde sale cada dato y recuerda la conversación.
 
-> Estado: el notebook incluye la base de conocimiento, el agente con LangGraph y memoria, un chat interactivo y un trazado local del grafo. Además hay una interfaz web con Streamlit (`app.py`), que solo se ejecuta en local: no está desplegada en ninguna URL pública.
+> Estado: el notebook incluye la base de conocimiento, el agente con LangGraph y memoria, un chat interactivo y un trazado local del grafo. Además hay una interfaz web con Streamlit (`streamlit/app.py`), que solo se ejecuta en local: no está desplegada en ninguna URL pública.
 
 ## Dominio y documentos
 
@@ -36,7 +36,7 @@ En total son 293 chunks. El asistente no entrena modelos: contesta con el conten
 - ChromaDB: base vectorial local persistente.
 - LangGraph, con LangChain como base: agente y memoria.
 - Jupyter Notebook: entrega principal.
-- Streamlit: interfaz web opcional (`app.py`), solo en local.
+- Streamlit: interfaz web opcional (`streamlit/app.py`), solo en local.
 
 Los parámetros de generación son hipótesis iniciales ajustadas con las pruebas del notebook. El modelo de generación no se ha comparado con otros.
 
@@ -64,7 +64,7 @@ GEMINI_API_KEY=tu_clave
 
 ## Ejecución
 
-1. Abre `agente_experto_ml.ipynb` en VS Code o Jupyter y selecciona el kernel `.venv`.
+1. Abre `notebooks/agente_experto_ml.ipynb` en VS Code o Jupyter y selecciona el kernel `.venv`.
 2. Ejecuta las celdas en orden. Si existen los embeddings guardados en `datos_embeddings/` y la base en `base_chroma/`, no se vuelven a generar.
 3. Para chatear, ejecuta la sección 11. La 11.2 describe seis preguntas de ejemplo para la demo y la 11.3 las ejecuta en una sola conversación. La celda 11.4 pide la pregunta con `input()` (en VS Code la caja de texto aparece en la parte superior de la ventana) y termina al escribir `salir`.
 4. Para ver el recorrido del grafo, usa la sección 12 (`trazar`), que muestra qué nodo se ejecuta y qué escribe, sin enviar datos a ningún servicio externo.
@@ -74,13 +74,13 @@ GEMINI_API_KEY=tu_clave
 Con el entorno `.venv` activado, desde la carpeta del proyecto:
 
 ```bash
-streamlit run app.py
+streamlit run streamlit/app.py
 ```
 
 Se abre en el navegador (normalmente en `http://localhost:8501`) con un chat: escribes la pregunta, el asistente responde y, en dos desplegables, muestra las fuentes (archivo y páginas del PDF) y detalles de la respuesta (tipo de pregunta, pregunta reescrita, fragmentos y tokens). El botón «Nueva conversación» de la barra lateral borra el historial. Cada pestaña del navegador tiene su propia conversación.
 
-- **`app.py` es un único archivo** con la interfaz y el agente (prompts, nodos y grafo). Se decidió así por sencillez. El agente es una copia del que está en el notebook (secciones 10.1 a 10.6): si cambias un prompt o un nodo en uno, hay que cambiarlo también en el otro.
-- **Datos que necesita:** `datos_embeddings/` con el archivo de embeddings de 293 chunks (se indica por su nombre en `app.py`). Si no existe `base_chroma/`, la app la reconstruye desde ese archivo, sin llamar a Gemini.
+- **`streamlit/app.py` es un único archivo** con la interfaz y el agente (prompts, nodos y grafo). Se decidió así por sencillez. El agente es una copia del que está en el notebook (secciones 10.1 a 10.6): si cambias un prompt o un nodo en uno, hay que cambiarlo también en el otro.
+- **Datos que necesita:** `datos_embeddings/` con el archivo de embeddings de 293 chunks (se indica por su nombre en `streamlit/app.py`). Si no existe `base_chroma/`, la app la reconstruye desde ese archivo, sin llamar a Gemini.
 - **Clave:** la lee del archivo `.env` (`GEMINI_API_KEY`), igual que el notebook.
 - **Precaución:** no conviene tener el notebook y la app abiertos a la vez sobre la misma carpeta `base_chroma/`.
 - **Sin despliegue:** cada pregunta gasta cuota de la clave de quien la ejecuta. La app no se ha desplegado en la nube.
@@ -92,8 +92,9 @@ Se abre en el navegador (normalmente en `http://localhost:8501`) con un chat: es
 - `docs/`: PDF originales.
 - `datos_embeddings/`: embeddings y progreso en JSON. Cada archivo lleva en su nombre una huella del contenido y la configuración. Puede haber archivos de configuraciones anteriores.
 - `base_chroma/`: base vectorial local (se puede reconstruir desde `datos_embeddings/`; no se versiona).
-- `app.py`: interfaz web con Streamlit y el agente en un único archivo.
-- `agente_experto_ml.ipynb`: notebook del proyecto, con estas secciones: lectura y limpieza (1 a 5), chunks (6), embeddings (7), ChromaDB (8), evaluación de la recuperación (9), agente con LangGraph y memoria (10), chat interactivo (11) y trazado local (12).
+- `streamlit/app.py`: interfaz web con Streamlit y el agente en un único archivo.
+- `docs/presentacion/`: presentación en PowerPoint (el vídeo de la demo se entrega aparte, no está en el repositorio).
+- `notebooks/agente_experto_ml.ipynb`: notebook del proyecto, con estas secciones: lectura y limpieza (1 a 5), chunks (6), embeddings (7), ChromaDB (8), evaluación de la recuperación (9), agente con LangGraph y memoria (10), chat interactivo (11) y trazado local (12).
 - `requirements.txt`: dependencias.
 
 ## System prompt

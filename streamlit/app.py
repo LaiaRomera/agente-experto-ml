@@ -34,7 +34,7 @@ st.set_page_config(page_title="Asistente de machine learning", page_icon="📚")
 # Los mismos valores que en el notebook.
 # ============================================================================================
 
-CARPETA = Path(__file__).parent  # Carpeta donde está este archivo; las rutas parten de aquí.
+CARPETA = Path(__file__).parent.parent  # Raíz del proyecto (este archivo está en streamlit/); las rutas parten de aquí.
 RUTA_CHROMA = CARPETA / "base_chroma"
 # Archivo con los textos, metadatos y vectores de los 293 chunks. Se indica por nombre para no
 # cargar por error el archivo antiguo (287 chunks) que hay en la misma carpeta.
